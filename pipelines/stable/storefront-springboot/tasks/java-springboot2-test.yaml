@@ -19,4 +19,4 @@ spec:
         privileged: true
       image: $(inputs.params.kabanero-springboot2-image)
       workingdir: $(inputs.resources.git-source.path)
-      command: ["/bin/bash", "-c", "$APPSODY_TEST"]
+ 
