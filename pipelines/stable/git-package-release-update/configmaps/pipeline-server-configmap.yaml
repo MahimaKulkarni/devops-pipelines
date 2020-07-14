@@ -4,7 +4,7 @@ metadata:
   name: pipeline-server-configmap
   namespace: kabanero
 data:
-  repo_org: ibm-garage-ref-storefront
-  repo_name: pipelines-server
+  repo_org: mahimakulkarni
+  repo_name: https://github.com/MahimaKulkarni/devops-server
   image_registry_publish: 'false'
   kabanero_pipeline_id: pipeline-manager
