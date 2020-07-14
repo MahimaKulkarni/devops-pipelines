@@ -5,6 +5,6 @@ metadata:
   namespace: kabanero
 data:
   repo_org: mahimakulkarni
-  repo_name: https://github.com/MahimaKulkarni/devops-server
+  repo_name: devops-server
   image_registry_publish: 'false'
   kabanero_pipeline_id: pipeline-manager
