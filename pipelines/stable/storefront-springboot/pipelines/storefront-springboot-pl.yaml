@@ -39,7 +39,7 @@ spec:
     taskRef:
       kind: Task
       name: custom-java-spring-boot2-sonarqube-task
-  - name: test-task
+  - name: pact-task
     resources:
       inputs:
         - name: git-source
