@@ -48,16 +48,6 @@ spec:
     - sonarqube-task
     taskRef:
       kind: Task
-      name: custom-java-spring-boot2-test-task
-  - name: pact-task
-    resources:
-      inputs:
-        - name: git-source
-          resource: git-source
-    runAfter:
-    - test-task
-    taskRef:
-      kind: Task
       name: custom-java-spring-boot2-pact-task
   - name: build-push-task
     resources:
