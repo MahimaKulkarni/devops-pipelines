@@ -35,7 +35,7 @@ spec:
             echo "PactBroker url not set. Skipping pact publish"
             exit 0
           else
-              mvn install -q -f /project/appsody-boot2-snowdrop-pom.xml
+              mvn install -q -f /project
               mvn clean install pact:publish -Dpact.broker.url="${PACTBROKER_URL}" -Ppact-consumer
           fi
       volumeMounts:
@@ -62,7 +62,7 @@ spec:
             echo "PactBroker url not set. Skipping pact verification"
             exit 0
           else
-              mvn install -q -f /project/appsody-boot2-snowdrop-pom.xml
+              mvn install -q -f /project
               PACT_HOST=$(echo "${PACTBROKER_URL}" | cut -d'/' -f3 | cut -d':' -f1)
               mvn test -Dpact.verifier.publishResults='true' -Dpactbroker.host="${PACT_HOST}" -Ppact-producer
           fi

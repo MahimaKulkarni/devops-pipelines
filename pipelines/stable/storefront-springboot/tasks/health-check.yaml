@@ -21,7 +21,7 @@ spec:
       workingdir: $(inputs.resources.git-source.path)
       env:
         - name: NAMESPACE
-          value: storefront-dev
+          value: atci-cp4a-dnb-demo
       command: ["/bin/bash"]
       args:
         - -c

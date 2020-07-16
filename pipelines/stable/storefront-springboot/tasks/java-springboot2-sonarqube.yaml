@@ -26,17 +26,11 @@ spec:
               name: sonarqube-config
               key: SONARQUBE_URL
               optional: true
-        - name: SONARQUBE_USER
+        - name: SONARQUBE_LOGIN
           valueFrom:
             secretKeyRef:
               name: sonarqube-access
-              key: SONARQUBE_USER
-              optional: true
-        - name: SONARQUBE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: sonarqube-access
-              key: SONARQUBE_PASSWORD
+              key: SONARQUBE_LOGIN
               optional: true
       command: ["/bin/bash"]
       args:
@@ -47,12 +41,12 @@ spec:
               echo "Skipping SonarQube tests - SonarQube not configured"
           elif [ "${SONARQUBE_URL}" == "url" ]; then
               echo "Skipping SonarQube tests - SonarQube not configured"
-          elif [ -z "${SONARQUBE_USER}" || -z "${SONARQUBE_PASSWORD}"]; then
+          elif [ -z "${SONARQUBE_LOGIN}"]; then
               echo "Skipping SonarQube tests - SonarQube credentials not found"
           else
-              mvn install -q -f /project/appsody-boot2-snowdrop-pom.xml
+              mvn install -q -f /project
               mvn package
-              mvn sonar:sonar -Dsonar.host.url="${SONARQUBE_URL}" -Dsonar.login="${SONARQUBE_USER}" -Dsonar.password="${SONARQUBE_PASSWORD}"
+              mvn sonar:sonar -Dsonar.host.url="${SONARQUBE_URL}" -Dsonar.login="${SONARQUBE_LOGIN}"
           fi
       volumeMounts:
         - name: m2-repository
