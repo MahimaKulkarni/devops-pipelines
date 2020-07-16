@@ -121,18 +121,3 @@ spec:
     taskRef:
       kind: Task
       name: custom-java-spring-boot2-health-check-task
-  - name: gitops-task
-    resources:
-      inputs:
-        - name: git-source
-          resource: git-source
-        - name: docker-image
-          resource: docker-image
-    params:
-        - name: gitRepo
-          value: "$(params.gitRepo)"
-    runAfter:
-    - health-check-task
-    taskRef:
-      kind: Task
-      name: custom-java-spring-boot2-gitops-task
