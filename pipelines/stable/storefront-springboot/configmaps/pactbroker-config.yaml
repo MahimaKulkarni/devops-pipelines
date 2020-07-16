@@ -1,0 +1,23 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: pactbroker-config
+  namespace: tools
+  labels:
+    app: pactbroker
+    grouping: garage-cloud-native-toolkit
+    app.kubernetes.io/part-of: pactbroker
+    app.kubernetes.io/instance: pactbroker-config
+    release: pactbroker-config
+    app.kubernetes.io/version: 0.2.0
+    app.kubernetes.io/component: tools
+    app.kubernetes.io/name: pactbroker
+    chart: tool-config-0.2.0
+    group: catalyst-tools
+  annotations:
+    description: >-
+      Config map to hold the url for pactbroker in the environment so that other
+      components can access it
+data:
+  PACTBROKER_URL: >-
+    https://pact-broker-tools.devops-gse-state-209696-0143c5dd31acd8e030a1d6e0ab1380e3-0000.us-east.containers.appdomain.cloud

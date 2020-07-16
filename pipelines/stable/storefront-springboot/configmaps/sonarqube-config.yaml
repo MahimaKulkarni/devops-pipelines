@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  SONARQUBE_URL: https://sonarqube-cicd-jenkins.icp4acluster-8fedc72a8a1f2d5622b98d95c90d7044-0000.us-south.containers.appdomain.cloud
+kind: ConfigMap
+metadata:
+  annotations:
+    description: Config map to hold the url for sonarqube in the environment so that
+      other components can access it
+  labels:
+    app: sonarqube
+    app.kubernetes.io/component: tools
+    app.kubernetes.io/instance: sonarqube
+    app.kubernetes.io/name: sonarqube
+    release: sonarqube
+  name: sonarqube-config
+  namespace: kabanero
