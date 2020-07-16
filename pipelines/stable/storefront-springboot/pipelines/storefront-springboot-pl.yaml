@@ -3,7 +3,7 @@ kind: Pipeline
 metadata:
   name: storefront-springboot-pl
   namespace: kabanero
-  author: Mahima Kulkarni
+  author: Mahima Kulkarnii
 spec:
   params:
   - description: The event type
