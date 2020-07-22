@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: Pipeline
 metadata:
-  name: storefront-springboot-pl-my
+  name: storefront-springboot-pl
   namespace: kabanero
   author: Mahima Kkulkarni
 spec:
