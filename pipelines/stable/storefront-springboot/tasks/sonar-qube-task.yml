@@ -1,0 +1,99 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  annotations:
+    manifestival: new
+  selfLink: >-
+    /apis/tekton.dev/v1alpha1/namespaces/kabanero/tasks/custom-java-spring-boot2-sonarqube-task
+  resourceVersion: '15706150'
+  name: custom-java-spring-boot2-sonarqube-task
+  uid: d30c9da5-a23b-4978-98a9-277295e8a9f7
+  creationTimestamp: '2020-07-16T10:15:14Z'
+  generation: 14
+  namespace: kabanero
+  ownerReferences:
+    - apiVersion: kabanero.io/v1alpha2
+      controller: false
+      kind: Stack
+      name: mystack
+      uid: b2b00c16-9060-482a-878e-9dc49b47e3fb
+spec:
+  inputs:
+    params:
+      - name: kabanero-springboot2-image
+        type: string
+        default: kabanero/java-spring-boot2:0.3
+    resources:
+      - name: docker-image
+        type: image
+      - name: git-source
+        type: git
+  steps:
+    - name: appsody-extract
+      resources: {}
+      securityContext:
+        privileged: true
+      command: - /bin/bash
+      workingDir: $(inputs.resources.git-source.path)
+      image: 'appsody/appsody-buildah:0.5.8-buildah1.9.0'
+      args:
+        - '-c'
+        - |
+          set -e
+
+          if [ -z "${SONARQUBE_URL}" ]; then
+              echo "Skipping SonarQube tests - SonarQube not configured"
+          elif [ "${SONARQUBE_URL}" == "url" ]; then
+              echo "Skipping SonarQube tests - SonarQube not configured"
+          elif [ -z "${SONARQUBE_LOGIN}" ]; then
+              echo "Skipping SonarQube tests - SonarQube credentials not found"
+          else
+              appsody extract --buildah --target-dir ./sonarscan
+              echo "Appsody extract completed"
+          fi
+     volumeMounts:
+        - mountPath: /var/lib/containers
+          name: varlibcontainers
+    - name: sonarqube
+      command: - /bin/bash
+      env:
+        - name: SONARQUBE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: SONARQUBE_URL
+              name: sonarqube-config
+              optional: true
+        - name: SONARQUBE_LOGIN
+          valueFrom:
+            secretKeyRef:
+              key: SONARQUBE_LOGIN
+              name: sonarqube-access
+              optional: true
+      securityContext:
+        privileged: true
+      image: $(inputs.params.maven-image)
+      workingDir: $(inputs.resources.git-source.path)
+      args:
+        - '-c'
+        - |
+          set -e
+              echo "Starting sonar scan"
+              cd /workspace/git-source/sonarscan/user-app
+              mvn sonar:sonar -Dsonar.host.url="${SONARQUBE_URL}" -Dsonar.login="${SONARQUBE_LOGIN}"
+      volumeMounts:
+        - mountPath: .m2/repository
+          name: m2-repository
+  volumes:
+    - emptyDir: {}
+      name: m2-repository
+    - name: varlibcontainer
+    - configMap:
+        name: stack-image-registry-map
+        optional: true
+      name: config-volume
+    - name: secret-volume
+      secret:
+        optional: true
+        secretName: default-stack-image-registry-secret
+  
+      

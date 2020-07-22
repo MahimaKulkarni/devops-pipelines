@@ -54,23 +54,13 @@ spec:
     taskRef:
       kind: Task
       name: custom-java-spring-boot2-sonarqube-task
-  - name: test-task
-    resources:
-      inputs:
-        - name: git-source
-          resource: git-source
-    runAfter:
-    - sonarqube-task
-    taskRef:
-      kind: Task
-      name: custom-java-spring-boot2-test-task
   - name: pact-task
     resources:
       inputs:
         - name: git-source
           resource: git-source
     runAfter:
-    - test-task
+    - sonarqube-task
     taskRef:
       kind: Task
       name: custom-java-spring-boot2-pact-task
@@ -83,7 +73,7 @@ spec:
       - name: docker-image
         resource: docker-image
     runAfter:
-    - build-push-task
+    - pact-task
     taskRef:
       kind: Task
       name: java-spring-boot2-image-scan-task
