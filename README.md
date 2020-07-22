@@ -1,4 +1,3 @@
-
 # Extend, Build & Deploy Kabanero Pipelines
 Developers that use [Kabanero](https://kabanero.io/) pipelines often times have to extend these pipelines to do certain tasks that do not come
 in the out-of-the-box Kabanero pipelines. These tasks may include code coverage, or use third party applications like
