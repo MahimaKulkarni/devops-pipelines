@@ -40,7 +40,7 @@ spec:
       - name: git-source
         resource: git-source
     runAfter:
-    - validate-stack-task
+    - sonarqube-task
     taskRef:
       kind: Task
       name: java-spring-boot2-build-push-task
@@ -62,7 +62,7 @@ spec:
       - name: docker-image
         resource: docker-image
     runAfter:
-    - build-push-task
+    - pact-task
     taskRef:
       kind: Task
       name: java-spring-boot2-image-scan-task
