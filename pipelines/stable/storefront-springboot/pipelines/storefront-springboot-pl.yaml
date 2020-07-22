@@ -87,3 +87,16 @@ spec:
       taskRef:
         kind: Task
         name: java-spring-boot2-deploy-task
+    - name: health-check-task
+      params:
+        - name: gitRepo
+          value: $(params.gitRepo)
+      resources:
+        inputs:
+          - name: git-source
+            resource: git-source
+      runAfter:
+        - deploy-task
+      taskRef:
+        kind: Task
+        name: custom-java-spring-boot2-health-check-task
